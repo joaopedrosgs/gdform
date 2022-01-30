@@ -1,7 +1,7 @@
 GDForm
 =========================================
 
-![Editor screenshot](addons\gdform\example\illustration.png)
+![Editor screenshot](https://raw.githubusercontent.com/joaopedrosgs/gdform/main/addons/gdform/example/illustration.png)
 
 GDForm allows you to generate forms on the fly using plain JSON Schema.
 
