@@ -54,8 +54,7 @@ func instantiate_properties(properties: Dictionary):
 		self.add_child(node_instance)
 		node_instance.set_owner(self)
 		node_instance.set_custom_minimum_size(Vector2(50, 24))
-		node_instance.label_text = key
-		node_instance.description_text = property.description
+		node_instance.set_property(property)
 		node_instance.connect("data_changed", self, "_on_field_data_changed")
 		properties[key].instance = node_instance
 
@@ -66,7 +65,10 @@ func parse_properties(data) -> Dictionary:
 		var property = data.properties[key]
 		var node_class = NodeMapping.type_to_field(property.type)
 		dictionary[key] = {
-			"type": property.type, "node": node_class, "description": property.description
+			"name": key,
+			"type": property.type,
+			"node": node_class,
+			"description": property.description
 		}
 	return dictionary
 
@@ -80,6 +82,8 @@ func fill_data(properties: Dictionary, data: Dictionary):
 
 
 func _on_submit_button_pressed():
+	if OS.is_debug_build():
+		print("Data submitted: ", data)
 	emit_signal("submitted", final_data)
 
 

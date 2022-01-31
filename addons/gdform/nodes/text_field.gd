@@ -10,6 +10,18 @@ export(String) var value = "" setget set_value, get_value
 
 signal data_changed(label, text)
 
+var property setget set_property, get_property
+
+
+func set_property(new_property):
+	property = new_property
+	label_text = property.name.capitalize()
+	description_text = property.description
+
+
+func get_property() -> float:
+	return value
+
 
 func set_label_text(text: String):
 	label_text = text

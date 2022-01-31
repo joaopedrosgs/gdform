@@ -17,7 +17,7 @@ Features
 - [ ] Number field
 - [ ] Object field
 - [ ] Array field
-- [ ] Boolean field
+- [x] Boolean field
 - [ ] Null field
 - [ ] Support for required
 - [ ] Validation

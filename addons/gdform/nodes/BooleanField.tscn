@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/gdform/nodes/boolean_field.gd" type="Script" id=1]
+
+[node name="BooleanField" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+label_text = "Boolean label"
+description_text = "Boolean label description"
+
+[node name="Description" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 14.0
+
+[node name="CheckBox" type="CheckBox" parent="."]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 42.0
+
+[connection signal="toggled" from="CheckBox" to="." method="_on_CheckBox_toggled"]

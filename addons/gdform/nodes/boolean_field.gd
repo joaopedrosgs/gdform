@@ -1,19 +1,18 @@
 extends VBoxContainer
 
-onready var label: Label = $Label
 onready var description: Label = $Description
-onready var float_line_edit = $FloatLineEdit
+onready var check_box: CheckBox = $CheckBox
 
 export(String) var label_text = "" setget set_label_text, get_label_text
 export(String) var description_text = "" setget set_description_text, get_description_text
-export(float) var value = 0.0 setget set_value, get_value
-signal data_changed(label, new_number)
+export(bool) var value = false setget set_value, get_value
+signal data_changed(label, button_pressed)
 var property setget set_property, get_property
 
 
 func set_property(new_property):
 	property = new_property
-	label_text = property.name.capitalize()
+	label_text = property.name
 	description_text = property.description
 
 
@@ -21,22 +20,22 @@ func get_property() -> float:
 	return value
 
 
-func set_value(new_value: float):
+func set_value(new_value: bool):
 	value = new_value
-	if not float_line_edit:
+	if not check_box:
 		yield(self, "ready")
-	float_line_edit.text = String(value)
+	check_box.pressed = value
 
 
-func get_value() -> float:
+func get_value() -> bool:
 	return value
 
 
 func set_label_text(text: String):
 	label_text = text
-	if not label:
+	if not check_box:
 		yield(self, "ready")
-	label.text = label_text.capitalize()
+	check_box.text = label_text.capitalize()
 
 
 func get_label_text() -> String:
@@ -64,5 +63,5 @@ func _ready():
 #	pass
 
 
-func _on_FloatLineEdit_number_changed(new_number):
-	emit_signal("data_changed", label_text, new_number)
+func _on_CheckBox_toggled(button_pressed):
+	emit_signal("data_changed", label_text, button_pressed)
