@@ -6,7 +6,8 @@
     "properties": {
       "firstName": {
         "type": "string",
-        "description": "The person's first name."
+        "description": "The person's first name.",
+        "maxLength":20
       },
       "lastName": {
         "type": "string",

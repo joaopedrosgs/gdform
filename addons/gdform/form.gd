@@ -60,16 +60,12 @@ func instantiate_properties(properties: Dictionary):
 
 
 func parse_properties(data) -> Dictionary:
-	var dictionary: Dictionary
+	var dictionary: Dictionary = data.properties.duplicate(true)
 	for key in data.properties:
 		var property = data.properties[key]
 		var node_class = NodeMapping.type_to_field(property.type)
-		dictionary[key] = {
-			"name": key,
-			"type": property.type,
-			"node": node_class,
-			"description": property.description
-		}
+		dictionary[key]["name"] = key
+		dictionary[key]["node"] = node_class
 	return dictionary
 
 

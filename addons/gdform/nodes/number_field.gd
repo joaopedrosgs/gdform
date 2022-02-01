@@ -2,7 +2,7 @@ extends VBoxContainer
 
 onready var label: Label = $Label
 onready var description: Label = $Description
-onready var float_line_edit = $FloatLineEdit
+onready var spin_box: SpinBox = $SpinBox
 
 export(String) var label_text = "" setget set_label_text, get_label_text
 export(String) var description_text = "" setget set_description_text, get_description_text
@@ -13,7 +13,7 @@ var property setget set_property, get_property
 
 func set_property(new_property):
 	property = new_property
-	label_text = property.name.capitalize()
+	label_text = property.name
 	description_text = property.description
 
 
@@ -23,9 +23,9 @@ func get_property() -> float:
 
 func set_value(new_value: float):
 	value = new_value
-	if not float_line_edit:
+	if not spin_box:
 		yield(self, "ready")
-	float_line_edit.text = String(value)
+	spin_box.value = value
 
 
 func get_value() -> float:
@@ -54,15 +54,23 @@ func set_description_text(text: String):
 	description.text = description_text
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass  # Replace
+	var step = 1 if property.type == "integer" else 0.01
+	if property.has("multipleOf"):
+		step = property.multipleOf
+		
+	var maximum = property.maximum if property.has("maximum") else 999999999
+	if property.has("exclusiveMaximum"):
+		maximum = property.exclusiveMaximum-1
+		
+	var minimum = property.minimum if property.has("minimum") else -999999999
+	if property.has("exclusiveMinimum"):
+		minimum = property.exclusiveMinimum+1
+		
+	
+	spin_box.step = step
+	spin_box.min_value = minimum
+	spin_box.max_value = maximum
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-func _on_FloatLineEdit_number_changed(new_number):
-	emit_signal("data_changed", label_text, new_number)
+func _on_SpinBox_value_changed(value):
+	emit_signal("data_changed", label_text, value)
